@@ -12,7 +12,7 @@ There you can fetch alternate printer and display firmware images. The ones list
 - [Flashing the display firmware](#flashing-the-ui-display)
 - [Configure OctoPrint](#configuring-octoprint-octopi)
 - [Setting Z-Axis](#setting-z-axis-for-auto-bed-level)
-- [Print vertical display bracket](#print-vertical-display-bracket)
+- [Print vertical display bracket](#print-the-vertical-display-bracket)
 
 ## Flashing printer firmware
 
