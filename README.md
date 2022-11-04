@@ -12,6 +12,7 @@ There you can fetch alternate printer and display firmware images. The ones list
 - [Flashing the display firmware](#flashing-the-ui-display)
 - [Configure OctoPrint](#configuring-octoprint-octopi)
 - [Setting Z-Axis](#setting-z-axis-for-auto-bed-level)
+- [Print vertical display bracket](#print-vertical-display-bracket)
 
 ## Flashing printer firmware
 
@@ -40,7 +41,7 @@ zip file. Extract it, and place the entire `DWIN_SET` directory and contents ont
 
 - Configure the default printer settings (all settings not shown are default)
 
-    - General 
+    - General
       - Name: Aquila
       - Model: Voxelab Aquila
   - Print bed & build volume:
@@ -94,9 +95,9 @@ The following information was taken and slightly adapted from
 [this website](https://www.webcarpenter.com/blog/162-3D-Print---How-to-calibrate-Z-offset-with-a-BLTouch-bed-leveling-probe-sensor).
 
 Home the print head
- 
+
 Reset Z0-Offset
- 
+
     M851 Z0
 
 Store settings to EEPROM
@@ -157,4 +158,9 @@ Move the nozzle to true zero offset to see results
 
     G1 F60 Z0
 
+## Print the vertical display bracket
 
+Unzip [this file](https://github.com/stevieb9/voxelab-aquila/blob/main/files/vertical_display_bracket.zip)
+and send the job to the printer.
+
+That project was downloaded from [here](https://www.thingiverse.com/thing:4764038).
