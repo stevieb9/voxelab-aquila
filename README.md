@@ -33,54 +33,121 @@ zip file. Extract it, and place the entire `DWIN_SET` directory and contents ont
 
 - Configure the default printer settings (all settings not shown are default)
 
-General
-- Name: Aquila
-- Model: Voxelab Aquila
+    - General 
+      - Name: Aquila
+      - Model: Voxelab Aquila
+  - Print bed & build volume:
+    - Form factor: Rectangular
+    - Origin: Lower left
+    - Heated bed: True
+    - Width(X): 200mm
+    - Depth(Y): 200mm
+    - Height(Z): 250mm
+  - Add the following GCode scripts:
 
-Print bed & build volume:
-- Form factor: Rectangular
-- Origin: Lower left
-- Heated bed: True
-- Width(X): 200mm
-- Depth(Y): 200mm
-- Height(Z): 250mm
+    - Before print jobs start:
 
-- Add the following GCode scripts:
+          ;Jyers gcode
+          M75 ;Start Print Job on Display
+          M117 <F>{{ event.name }} ;Send Filename to Display
 
-Before print jobs start:
+    - After print job completes
 
-    ;Jyers gcode
-    M75 ;Start Print Job on Display
-    M117 <F>{{ event.name }} ;Send Filename to Display
+          ;Jyers gcode
+          M77 ;Stop Print Job on Display
 
-After print job completes
+    - After print job is cancelled:
 
-    ;Jyers gcode
-    M77 ;Stop Print Job on Display
+          ; disable motors
+          M84
 
-After print job is cancelled:
+          ;disable all heaters
+          {% snippet 'disable_hotends' %}
+          {% snippet 'disable_bed' %}
 
-    ; disable motors
-    M84
+          ;disable fan
+          M106 S0
 
-    ;disable all heaters
-    {% snippet 'disable_hotends' %}
-    {% snippet 'disable_bed' %}
+          ;Jyers code
+          M77 ;Stop Print Job on Display
 
-    ;disable fan
-    M106 S0
+    - After print job is paused
 
-    ;Jyers code
-    M77 ;Stop Print Job on Display
+          ;Jyers code
+          M76 ;Pause Print Job on Display
 
-After print job is paused
+    - Before print job is resumed
 
-    ;Jyers code
-    M76 ;Pause Print Job on Display
+          ;Jyers code
+          M75 ;Start Print Job on Display
 
-Before print job is resumed
+## Setting Z-Axis for auto bed level
 
-    ;Jyers code
-    M75 ;Start Print Job on Display
+The following information was taken and slightly adapted from
+[this website](https://www.webcarpenter.com/blog/162-3D-Print---How-to-calibrate-Z-offset-with-a-BLTouch-bed-leveling-probe-sensor).
+
+Home the print head
+ 
+Reset Z0-Offset
+ 
+    M851 Z0
+
+Store settings to EEPROM
+
+    M500
+
+Set active parameters
+
+    M501
+
+Display active parameters
+
+    M503
+
+Home the nozzle and show the Z-Axis
+
+    G28
+
+Move the nozzle to true 0 offset
+
+    G1 F60 Z0
+
+Disable soft end stops (so the print head can go below zero)
+
+    M211 S0
+
+Using the 'Control' feature in Octoprint, move the print head down to the table
+until a piece of paper can barely move under it.
+
+Take note of what the Z axis says on the display. Mine was `2.57`. Add a
+fraction to add for the paper, so mine would then be `2.58`.
+
+Set the Z-Axis (note the negative number)
+
+    M851 Z -2.58
+
+Enable soft end stops
+
+    M211 51
+
+Save settings to EEPROM
+
+    M500
+
+Set active parameters
+
+    M501
+
+Display current settings
+
+    M503
+
+Tell the printer to go home
+
+    G28
+
+Move the nozzle to true zero offset to see results
+
+    G1 F60 Z0
 
 
