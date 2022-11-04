@@ -6,6 +6,13 @@ Thanks to [alexqzd](https://github.com/alexqzd/Marlin) over on Github, as the so
 
 There you can fetch alternate printer and display firmware images. The ones listed below are just the ones I use for my own printer.
 
+## Table of contents
+
+- [Flashing the printer firmware](#flashing-printer-firmware)
+- [Flashing the display firmware](#flashing-the-ui-display)
+- [Configure OctoPrint](#configuring-octoprint-octopi)
+- [Setting Z-Axis](#setting-z-axis-for-auto-bed-level)
+
 ## Flashing printer firmware
 
 - On Windows, format the SDcard FAT32 4096 Byte
