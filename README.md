@@ -12,7 +12,9 @@ There you can fetch alternate printer and display firmware images. The ones list
 - [Flashing the display firmware](#flashing-the-ui-display)
 - [Configure OctoPrint](#configuring-octoprint-octopi)
 - [Setting Z-Axis](#setting-z-axis-for-auto-bed-level)
+- [Display progress while printing from Octoprint](#display-progress-from-octoprint)
 - [Print vertical display bracket](#print-the-vertical-display-bracket)
+- [Setting up Coda slicer](#setting-up-coda-slicer)
 
 ## Flashing printer firmware
 
@@ -158,9 +160,38 @@ Move the nozzle to true zero offset to see results
 
     G1 F60 Z0
 
+## Display progress from Octoprint
+
+To have the UI display the progress when printing from Octoprint, within octoprint,
+install the `M73 Progress` plugin.
+
 ## Print the vertical display bracket
 
 Unzip [this file](https://github.com/stevieb9/voxelab-aquila/blob/main/files/vertical_display_bracket.zip)
 and send the job to the printer.
 
 That project was downloaded from [here](https://www.thingiverse.com/thing:4764038).
+
+## Setting up Coda slicer
+
+This will allow you to use Coda to slice, and send jobs directly to the printer
+through Octoprint.
+
+Download and install [Ultimaker Cura](https://ultimaker.com/software/ultimaker-cura)
+
+Install the OctoPrint Connection plug-in from the Coda Marketplace.
+
+Configure the printer:
+
+- Name: Voxelab Aquila
+- X (Width): 200mm
+- Y (Depth): 200mm
+- Z (Height): 250mm
+- Heated bed: Y
+- G-code flavor: Marlin
+- Leave everything else default
+
+Then simply click 'Print with OctoPrint' when you have a job loaded
+
+
+
