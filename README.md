@@ -14,7 +14,7 @@ There you can fetch alternate printer and display firmware images. The ones list
 - [Setting Z-Axis](#setting-z-axis-for-auto-bed-level)
 - [Display progress while printing from Octoprint](#display-progress-from-octoprint)
 - [Print vertical display bracket](#print-the-vertical-display-bracket)
-- [Setting up Coda slicer](#setting-up-coda-slicer)
+- [Setting up Cura slicer](#setting-up-cura-slicer)
 
 ## Flashing printer firmware
 
@@ -172,14 +172,14 @@ and send the job to the printer.
 
 That project was downloaded from [here](https://www.thingiverse.com/thing:4764038).
 
-## Setting up Coda slicer
+## Setting up Cura slicer
 
-This will allow you to use Coda to slice, and send jobs directly to the printer
+This will allow you to use Cura to slice, and send jobs directly to the printer
 through Octoprint.
 
 Download and install [Ultimaker Cura](https://ultimaker.com/software/ultimaker-cura)
 
-Install the OctoPrint Connection plug-in from the Coda Marketplace.
+Install the OctoPrint Connection plug-in from the Cura Marketplace.
 
 Configure the printer:
 
