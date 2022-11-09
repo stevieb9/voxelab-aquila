@@ -10,15 +10,15 @@ There you can fetch alternate printer and display firmware images. The ones list
 
 - [Flashing the printer firmware](#flashing-printer-firmware)
 - [Flashing the display firmware](#flashing-the-ui-display)
-- [Configure OctoPrint](#configuring-octoprint-octopi)
 - [Setting Z-Axis](#setting-z-axis-for-auto-bed-level)
 - [Auto level the bed](#auto-level-the-bed)
+- [Configure OctoPrint](#configuring-octoprint-octopi)
 - [Display progress while printing from Octoprint](#display-progress-from-octoprint)
-- [Print vertical display bracket](#print-the-vertical-display-bracket)
 - [Setting up Cura slicer](#setting-up-cura-slicer)
+- [Print vertical display bracket](#print-the-vertical-display-bracket)
 - [Print accessories](#print-the-other-accessories)
 - [Setting up UI power toggle](#setting-up-ui-power-toggle)
-- [Disable the pi from powering the printer](#disable-pi-powering-the-printer)
+- [Disable the Pi from powering the printer](#disable-pi-powering-the-printer)
  
 ## Flashing printer firmware
 
@@ -38,62 +38,6 @@ zip file. Extract it, and place the entire `DWIN_SET` directory and contents ont
 - Remove the back of the display, insert the SD card, plug the display back in and reboot the printer
 - The screen will go blue for a few seconds, then red, indicating the process is complete
 - Remove the SD card, and reboot the printer
-
-## Configuring OctoPrint (OctoPi)
-
-- Flash an SD card using the Rasperry Pi Imager with the OctoPi firmware
-
-- Configure the Pi
-
-- Configure the default printer settings (all settings not shown are default)
-
-    - General
-      - Name: Aquila
-      - Model: Voxelab Aquila
-  - Print bed & build volume:
-    - Form factor: Rectangular
-    - Origin: Lower left
-    - Heated bed: True
-    - Width(X): 200mm
-    - Depth(Y): 200mm
-    - Height(Z): 250mm
-  - Add the following GCode scripts:
-
-    - Before print jobs start:
-
-          ;Jyers gcode
-          M75 ;Start Print Job on Display
-          M117 <F>{{ event.name }} ;Send Filename to Display
-
-    - After print job completes
-
-          ;Jyers gcode
-          M77 ;Stop Print Job on Display
-
-    - After print job is cancelled:
-
-          ; disable motors
-          M84
-
-          ;disable all heaters
-          {% snippet 'disable_hotends' %}
-          {% snippet 'disable_bed' %}
-
-          ;disable fan
-          M106 S0
-
-          ;Jyers code
-          M77 ;Stop Print Job on Display
-
-    - After print job is paused
-
-          ;Jyers code
-          M76 ;Pause Print Job on Display
-
-    - Before print job is resumed
-
-          ;Jyers code
-          M75 ;Start Print Job on Display
 
 ## Setting Z-Axis for auto bed level
 
@@ -169,17 +113,66 @@ Move the nozzle to true zero offset to see results
 On the display, go to `Leveling`, `Create new mesh`. When complete, save it to 
 EEPROM.
 
+## Configuring OctoPrint (OctoPi)
+
+- Flash an SD card using the Rasperry Pi Imager with the OctoPi firmware
+
+- Configure the Pi
+
+- Configure the default printer settings (all settings not shown are default)
+
+  - General
+    - Name: Aquila
+    - Model: Voxelab Aquila
+  - Print bed & build volume:
+    - Form factor: Rectangular
+    - Origin: Lower left
+    - Heated bed: True
+    - Width(X): 200mm
+    - Depth(Y): 200mm
+    - Height(Z): 250mm
+  - Add the following GCode scripts:
+
+    - Before print jobs start:
+
+          ;Jyers gcode
+          M75 ;Start Print Job on Display
+          M117 <F>{{ event.name }} ;Send Filename to Display
+
+    - After print job completes
+
+          ;Jyers gcode
+          M77 ;Stop Print Job on Display
+
+    - After print job is cancelled:
+
+          ; disable motors
+          M84
+
+          ;disable all heaters
+          {% snippet 'disable_hotends' %}
+          {% snippet 'disable_bed' %}
+
+          ;disable fan
+          M106 S0
+
+          ;Jyers code
+          M77 ;Stop Print Job on Display
+
+    - After print job is paused
+
+          ;Jyers code
+          M76 ;Pause Print Job on Display
+
+    - Before print job is resumed
+
+          ;Jyers code
+          M75 ;Start Print Job on Display
+
 ## Display progress from Octoprint
 
 To have the UI display the progress when printing from Octoprint, within octoprint,
 install the `M73 Progress` plugin.
-
-## Print the vertical display bracket
-
-Unzip [this file](https://github.com/stevieb9/voxelab-aquila/blob/main/files/vertical_display_bracket.zip)
-and send the job to the printer.
-
-That project was downloaded from [here](https://www.thingiverse.com/thing:4764038).
 
 ## Setting up Cura slicer
 
@@ -203,6 +196,13 @@ Configure the printer:
 - Leave everything else default
 
 Then simply click 'Print with OctoPrint' when you have a job loaded
+
+## Print the vertical display bracket
+
+Unzip [this file](https://github.com/stevieb9/voxelab-aquila/blob/main/files/vertical_display_bracket.zip)
+and send the job to the printer via Cura.
+
+That project was downloaded from [here](https://www.thingiverse.com/thing:4764038).
 
 ## Print the other accessories
 
