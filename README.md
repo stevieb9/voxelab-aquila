@@ -22,12 +22,12 @@ listed below are just the ones I use for my own printer.
 - [Configure OctoPrint](#configuring-octoprint-octopi)
 - [Display progress while printing from Octoprint](#display-progress-from-octoprint)
 - [Setting up Cura slicer](#setting-up-cura-slicer)
-- [Using the saved bed mesh](#using-the-saved-bed-mesh-auto-level) 
+- [Using the saved bed mesh](#using-the-saved-bed-mesh-auto-level)
 - [Print vertical display bracket](#print-the-vertical-display-bracket)
 - [Print accessories](#print-the-other-accessories)
 - [Setting up UI power toggle](#setting-up-ui-power-toggle)
 - [Disable the Pi from powering the printer](#disable-pi-powering-the-printer)
- 
+
 ## Flashing printer firmware
 
 - On Windows, format the SDcard FAT32 4096 Byte
@@ -52,7 +52,9 @@ zip file. Extract it, and place the entire `DWIN_SET` directory and contents ont
 The following information was taken and slightly adapted from
 [this website](https://www.webcarpenter.com/blog/162-3D-Print---How-to-calibrate-Z-offset-with-a-BLTouch-bed-leveling-probe-sensor).
 
-Home the print head
+Home the hot end
+
+    G28
 
 Reset Z0-Offset
 
@@ -70,7 +72,7 @@ Display active parameters
 
     M503
 
-Home the nozzle and show the Z-Axis
+Home the hot end and show the Z-Axis
 
     G28
 
@@ -78,7 +80,7 @@ Move the nozzle to true 0 offset
 
     G1 F60 Z0
 
-Disable soft end stops (so the print head can go below zero)
+Disable soft end stops (so the hot end can go below zero)
 
     M211 S0
 
@@ -88,7 +90,7 @@ until a piece of paper can barely move under it.
 Take note of what the Z axis says on the display. Mine was `2.57`. Add a
 fraction to add for the paper, so mine would then be `2.58`.
 
-Set the Z-Axis (note the negative number)
+Set the Z-Axis (note we've converted the number from the last step to be negative)
 
     M851 Z -2.58
 
@@ -108,18 +110,21 @@ Display current settings
 
     M503
 
-Tell the printer to go home
+Home the hot end
 
     G28
 
-Move the nozzle to true zero offset to see results
+Move the hot end to true zero offset to see results
 
     G1 F60 Z0
 
 ## Auto level the bed
 
-On the display, go to `Leveling`, `Create new mesh`. When complete, save it to 
+On the display, go to `Level`, `Create new mesh`. When complete, save it to
 EEPROM.
+
+Be certain to read the [using the saved bed mesh](#using-the-saved-bed-mesh-auto-level)
+section a bit later in this document, or the saved mesh won't be used!
 
 ## Configuring OctoPrint (OctoPi)
 
@@ -153,7 +158,7 @@ EEPROM.
           M77 ;Stop Print Job on Display
 
     - After print job is cancelled:
-     
+
           G91 ;Relative positioning
           G1 E-2 F2700 ;Retract a bit
           G1 E-2 Z0.2 F2400 ;Retract and raise Z
@@ -168,10 +173,10 @@ EEPROM.
           ;disable fan
           M106 S0
 
-          ; disable all steppers (1 - all but z, 2 - all)
-          ;M84 X Y E
-          M84
-     
+          ; disable all steppers
+          ;M84 X Y E ; (all except Z)
+          M84        ; (all)
+
           ;Jyers code
           M77 ;Stop Print Job on Display
 
@@ -215,7 +220,7 @@ Then simply click 'Print with OctoPrint' when you have a job loaded.
 
 ## Using the saved bed mesh (auto-level)
 
-In the Manage Printer section of Cura settings, add the following linne directly
+In the Manage Printer section of Cura settings, add the following line directly
 beneath the `G28` line in your printer's "Start G-Code":
 
     M420 S1 ; Use saved bed mesh
@@ -242,9 +247,9 @@ Connect a relay to the Ground connection of the Pi, and GPIO (BCM) pin 21.
 Install the `PSU Control` plugin into OctoPi, and configure as follows:
 
 GPIO Device
- 
+
 - `/dev/gpiochip0`
- 
+
 Switching
 
 - Switching method: `GPIO`
