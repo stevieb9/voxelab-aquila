@@ -1,10 +1,17 @@
 # Voxelab Aquila 3D printer initialization
 
-This guide is how I got my Voxelab Aquila 3D printer working properly with a BLTouch auto bed leveller.
+This guide is how I got my Voxelab Aquila 3D printer working properly with a
+BLTouch auto bed leveler and remote power on/off via Octoprint using a Solid
+State Relay.
 
-Thanks to [alexqzd](https://github.com/alexqzd/Marlin) over on Github, as the software and much of the documentation came from him.
+Installing the BLTouch bed leveler is an exercise for the reader. Configuring it
+is however part of this guide.
 
-There you can fetch alternate printer and display firmware images. The ones listed below are just the ones I use for my own printer.
+Thanks to [alexqzd](https://github.com/alexqzd/Marlin) over on Github, as the
+software and much of the documentation came from him.
+
+There you can fetch alternate printer and display firmware images. The ones
+listed below are just the ones I use for my own printer.
 
 ## Table of contents
 
@@ -15,6 +22,7 @@ There you can fetch alternate printer and display firmware images. The ones list
 - [Configure OctoPrint](#configuring-octoprint-octopi)
 - [Display progress while printing from Octoprint](#display-progress-from-octoprint)
 - [Setting up Cura slicer](#setting-up-cura-slicer)
+- [Using the saved bed mesh](#using-the-saved-bed-mesh-auto-level) 
 - [Print vertical display bracket](#print-the-vertical-display-bracket)
 - [Print accessories](#print-the-other-accessories)
 - [Setting up UI power toggle](#setting-up-ui-power-toggle)
@@ -145,17 +153,25 @@ EEPROM.
           M77 ;Stop Print Job on Display
 
     - After print job is cancelled:
-
-          ; disable motors
-          M84
+     
+          G91 ;Relative positioning
+          G1 E-2 F2700 ;Retract a bit
+          G1 E-2 Z0.2 F2400 ;Retract and raise Z
+          G1 X5 Y5 F3000 ;Wipe out
+          G1 Z10 ;Raise Z more
+          G90 ;Absolute positioning
 
           ;disable all heaters
-          {% snippet 'disable_hotends' %}
-          {% snippet 'disable_bed' %}
+          M104 S0 ; hotend
+          M140 S0 ; bed
 
           ;disable fan
           M106 S0
 
+          ; disable all steppers (1 - all but z, 2 - all)
+          ;M84 X Y E
+          M84
+     
           ;Jyers code
           M77 ;Stop Print Job on Display
 
@@ -195,7 +211,14 @@ Configure the printer:
 - G-code flavor: Marlin
 - Leave everything else default
 
-Then simply click 'Print with OctoPrint' when you have a job loaded
+Then simply click 'Print with OctoPrint' when you have a job loaded.
+
+## Using the saved bed mesh (auto-level)
+
+In the Manage Printer section of Cura settings, add the following linne directly
+beneath the `G28` line in your printer's "Start G-Code":
+
+    M420 S1 ; Use saved bed mesh
 
 ## Print the vertical display bracket
 
