@@ -199,12 +199,13 @@ Then simply click 'Print with OctoPrint' when you have a job loaded
 
 ## Print the vertical display bracket
 
-Unzip [this file](https://github.com/stevieb9/voxelab-aquila/blob/main/files/vertical_display_bracket.zip)
-and send the job to the printer via Cura.
+The vertical display bracket files can be found [here](https://github.com/stevieb9/voxelab-aquila/raw/main/files/vertical_display_mount.zip).
 
 That project was downloaded from [here](https://www.thingiverse.com/thing:4764038).
 
 ## Print the other accessories
+
+All accessory STL files can be found [here](https://github.com/stevieb9/voxelab-aquila/tree/main/files).
 
 - Pi3 under chassis mount
 - Y-Axis camera mount
