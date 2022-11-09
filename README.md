@@ -141,8 +141,8 @@ section a bit later in this document, or the saved mesh won't be used!
     - Form factor: Rectangular
     - Origin: Lower left
     - Heated bed: True
-    - Width(X): 200mm
-    - Depth(Y): 200mm
+    - Width(X): 220mm
+    - Depth(Y): 220mm
     - Height(Z): 250mm
   - Add the following GCode scripts:
 
@@ -155,8 +155,8 @@ section a bit later in this document, or the saved mesh won't be used!
     - After print job completes
 
           G91 ;Relative positioning
-          G1 E-2 F2700 ;Retract a bit
-          G1 E-2 Z0.2 F2400 ;Retract and raise Z
+          G1 E-2 F2700 ;Retract filament a bit
+          G1 E-2 Z0.2 F2400 ;Retract filament more and raise Z
           G1 X5 Y5 F3000 ;Wipe out
           G1 Z10 ;Raise Z more
           G90 ;Absolute positioning
@@ -178,8 +178,8 @@ section a bit later in this document, or the saved mesh won't be used!
     - After print job is cancelled:
 
           G91 ;Relative positioning
-          G1 E-2 F2700 ;Retract a bit
-          G1 E-2 Z0.2 F2400 ;Retract and raise Z
+          G1 E-2 F2700 ;Retract filament a bit
+          G1 E-2 Z0.2 F2400 ;Retract filament more and raise Z
           G1 X5 Y5 F3000 ;Wipe out
           G1 Z10 ;Raise Z more
           G90 ;Absolute positioning
@@ -227,8 +227,8 @@ Install the Auto-Orientation plugin.
 Configure the printer:
 
 - Name: Voxelab Aquila
-- X (Width): 200mm
-- Y (Depth): 200mm
+- X (Width): 220mm
+- Y (Depth): 220mm
 - Z (Height): 250mm
 - Heated bed: Y
 - G-code flavor: Marlin
