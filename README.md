@@ -12,10 +12,14 @@ There you can fetch alternate printer and display firmware images. The ones list
 - [Flashing the display firmware](#flashing-the-ui-display)
 - [Configure OctoPrint](#configuring-octoprint-octopi)
 - [Setting Z-Axis](#setting-z-axis-for-auto-bed-level)
+- [Auto level the bed](#auto-level-the-bed)
 - [Display progress while printing from Octoprint](#display-progress-from-octoprint)
 - [Print vertical display bracket](#print-the-vertical-display-bracket)
 - [Setting up Cura slicer](#setting-up-cura-slicer)
-
+- [Print accessories](#print-the-other-accessories)
+- [Setting up UI power toggle](#setting-up-ui-power-toggle)
+- [Disable the pi from powering the printer](#disable-pi-powering-the-printer)
+ 
 ## Flashing printer firmware
 
 - On Windows, format the SDcard FAT32 4096 Byte
@@ -160,6 +164,11 @@ Move the nozzle to true zero offset to see results
 
     G1 F60 Z0
 
+## Auto level the bed
+
+On the display, go to `Leveling`, `Create new mesh`. When complete, save it to 
+EEPROM.
+
 ## Display progress from Octoprint
 
 To have the UI display the progress when printing from Octoprint, within octoprint,
@@ -181,6 +190,8 @@ Download and install [Ultimaker Cura](https://ultimaker.com/software/ultimaker-c
 
 Install the OctoPrint Connection plug-in from the Cura Marketplace.
 
+Install the Auto-Orientation plugin.
+
 Configure the printer:
 
 - Name: Voxelab Aquila
@@ -193,5 +204,37 @@ Configure the printer:
 
 Then simply click 'Print with OctoPrint' when you have a job loaded
 
+## Print the other accessories
 
+- Pi3 under chassis mount
+- Y-Axis camera mount
+- Filament guide
+- Solid State Relay rail mount
 
+## Setting up UI power toggle
+
+Connect a relay to the Ground connection of the Pi, and GPIO (BCM) pin 21.
+
+Install the `PSU Control` plugin into OctoPi, and configure as follows:
+
+GPIO Device
+ 
+- `/dev/gpiochip0`
+ 
+Switching
+
+- Switching method: `GPIO`
+- On/off GPIO pin: `21` (use invert depending on your relay)
+- Enable switching with GCode commands: `Yes`
+- On G-Code command: `M80`
+- Off G-Code command: `M81`
+- Turn off on unrecoverable error: `Yes`
+
+Sensing:
+
+Sensing method: `Internal`
+
+## Disable Pi powering the printer
+
+Cut a small piece of electrical tape, and place it over the 5v pin of the USB
+cable that connects to the Pi.
