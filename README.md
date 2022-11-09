@@ -7,8 +7,8 @@ State Relay.
 Installing the BLTouch bed leveler is an exercise for the reader. Configuring it
 is however part of this guide.
 
-Thanks to [alexqzd](https://github.com/alexqzd/Marlin) over on Github, as the
-software and much of the documentation came from him.
+Thanks to [alexqzd](https://github.com/alexqzd/Marlin), as the  software and
+much of the documentation came from him.
 
 There you can fetch alternate printer and display firmware images. The ones
 listed below are just the ones I use for my own printer.
@@ -153,6 +153,24 @@ section a bit later in this document, or the saved mesh won't be used!
           M117 <F>{{ event.name }} ;Send Filename to Display
 
     - After print job completes
+
+          G91 ;Relative positioning
+          G1 E-2 F2700 ;Retract a bit
+          G1 E-2 Z0.2 F2400 ;Retract and raise Z
+          G1 X5 Y5 F3000 ;Wipe out
+          G1 Z10 ;Raise Z more
+          G90 ;Absolute positioning
+
+          ;disable all heaters
+          M104 S0 ; hotend
+          M140 S0 ; bed
+
+          ;disable fan
+          M106 S0
+
+          ; disable all steppers
+          ;M84 X Y E ; (all except Z)
+          M84        ; (all)
 
           ;Jyers gcode
           M77 ;Stop Print Job on Display
