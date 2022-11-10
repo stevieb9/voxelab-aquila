@@ -123,6 +123,8 @@ Move the hot end to true zero offset to see results
 On the display, go to `Level`, `Create new mesh`. When complete, save it to
 EEPROM.
 
+Your ideal tolerance range when viewing the mesh is less than `0.1`.
+
 Be certain to read the [using the saved bed mesh](#using-the-saved-bed-mesh-auto-level)
 section a bit later in this document, or the saved mesh won't be used!
 
