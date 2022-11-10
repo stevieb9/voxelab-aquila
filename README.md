@@ -18,6 +18,7 @@ listed below are just the ones I use for my own printer.
 - [Flashing the printer firmware](#flashing-printer-firmware)
 - [Flashing the display firmware](#flashing-the-ui-display)
 - [Setting Z-Axis](#setting-z-axis-for-auto-bed-level)
+- [Setting Z-Axis quick guide](#setting-z-axis-quick-guide)
 - [Auto level the bed](#auto-level-the-bed)
 - [Configure OctoPrint](#configuring-octoprint-octopi)
 - [Display progress while printing from Octoprint](#display-progress-from-octoprint)
@@ -116,6 +117,35 @@ Home the hot end
 
 Move the hot end to true zero offset to see results
 
+    G1 F60 Z0
+
+## Setting Z-Axis quick guide
+
+First half script:
+
+    G28
+    M851 Z0
+    M500
+    M501
+    M503
+    G28
+    G1 F60 Z0
+    M211 S0
+
+Using the 'Control' feature in Octoprint, move the print head down to the table
+until a piece of paper can barely move under it.
+
+Take note of what the Z axis says on the display. Mine was `2.57`. Add a
+fraction to add for the paper, so mine would then be `2.58`.
+
+Second half script:
+
+    M851 Z -2.58
+    M211 51
+    M500
+    M501
+    M503
+    G28
     G1 F60 Z0
 
 ## Auto level the bed
