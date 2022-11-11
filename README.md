@@ -19,7 +19,8 @@ listed below are just the ones I use for my own printer.
 - [Flashing the display firmware](#flashing-the-ui-display)
 - [Setting Z-Axis](#setting-z-axis-for-auto-bed-level)
 - [Setting Z-Axis quick guide](#setting-z-axis-quick-guide)
-- [Auto level the bed](#auto-level-the-bed)
+- [Auto level the bed - Bed Visualizer](#auto-level-the-bed-bed-visualizer)
+- [Auto level the bed - Display panel](#auto-level-the-bed-display-panel)
 - [Configure OctoPrint](#configuring-octoprint-octopi)
 - [Display progress while printing from Octoprint](#display-progress-from-octoprint)
 - [Setting up Cura slicer](#setting-up-cura-slicer)
@@ -28,6 +29,7 @@ listed below are just the ones I use for my own printer.
 - [Print accessories](#print-the-other-accessories)
 - [Setting up UI power toggle](#setting-up-ui-power-toggle)
 - [Disable the Pi from powering the printer](#disable-pi-powering-the-printer)
+- [Configure iPhone app](#configure-iphone-app)
 
 ## Flashing printer firmware
 
@@ -148,7 +150,7 @@ Second half script:
     G28
     G1 F60 Z0
 
-## Auto level the bed
+## Auto level the bed (Display panel)
 
 On the display, go to `Level`, `Create new mesh`. When complete, save it to
 EEPROM.
@@ -157,6 +159,41 @@ Your ideal tolerance range when viewing the mesh is less than `0.1`.
 
 Be certain to read the [using the saved bed mesh](#using-the-saved-bed-mesh-auto-level)
 section a bit later in this document, or the saved mesh won't be used!
+
+## Auto level the bed (Bed Visualizer)
+
+Install the `Bed Visualizer` plugin.
+
+Go to the plugin's settings. Each section below is for the various configuration
+tabs.
+
+Paste the following GCODE into 'Collection tab', 'GCODE Commands' window:
+
+    M140 S60              ; starting by heating the bed for nominal mesh accuracy
+    M117 Homing all axes  ; send message to printer display
+    G28                   ; home all axes
+    M420 S0               ; Turning off bed leveling while probing, if firmware is set
+
+    ; to restore after G28
+
+    M117 Heating the bed    ; send message to printer display
+    M190 S60                ; waiting until the bed is fully warmed up
+    M300 S1000 P500         ; chirp to indicate bed mesh levels is initializing
+    M117 Creating the bed mesh levels ; send message to printer display
+    M155 S30                ; reduce temperature reporting rate to reduce output pollution
+    @BEDLEVELVISUALIZER	    ; tell the plugin to watch for reported mesh
+    G29 T	                ; run bilinear probing
+    M155 S3                 ; reset temperature reporting
+    M140 S0                 ; cooling down the bed
+    M500                    ; store mesh in EEPROM
+
+Enable or disable 'Save Mesh'.
+
+Enable or disable 'Webcam while processing'.
+
+Leave all other settings default.
+
+You can view your mesh data in the `Data` tab.
 
 ## Configuring OctoPrint (OctoPi)
 
@@ -317,3 +354,27 @@ Sensing method: `Internal`
 
 Cut a small piece of electrical tape, and place it over the 5v pin of the USB
 cable that connects to the Pi.
+
+## Configure iPhone app
+
+In OctoPrint, install the `OctoPod` notifications.
+
+In OctoPrint, install the `Obico for OctoPrint` plugin.
+
+Proceed through the Obico configuration.
+
+Install the `OctoPod` plugin from the App Store.
+
+Go to `Settings`.
+
+Click `Printers`.
+
+Click the `+` icon to add a new printer.
+
+Use the `The Spaghetti Detective` option.
+
+Proceed through the steps.
+
+Once done, you will be asked to authorize using a QR Code. In OctoPrint settings,
+go to `Printer`, `Application Keys` and generate a new App Key. This will result
+in a QR Code being displayed in the UI that you then capture with your phone.
