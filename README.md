@@ -17,12 +17,12 @@ listed below are just the ones I use for my own printer.
 
 - [Flashing the printer firmware](#flashing-printer-firmware)
 - [Flashing the display firmware](#flashing-the-ui-display)
+- [Configure OctoPrint](#configuring-octoprint-octopi)
+- [Display progress while printing from Octoprint](#display-progress-from-octoprint)
 - [Setting Z-Axis](#setting-z-axis-for-auto-bed-level)
 - [Setting Z-Axis quick guide](#setting-z-axis-quick-guide)
 - [Auto level the bed - Bed Visualizer](#auto-level-the-bed-bed-visualizer)
 - [Auto level the bed - Display panel](#auto-level-the-bed-display-panel)
-- [Configure OctoPrint](#configuring-octoprint-octopi)
-- [Display progress while printing from Octoprint](#display-progress-from-octoprint)
 - [Setting up Cura slicer](#setting-up-cura-slicer)
 - [Using the saved bed mesh](#using-the-saved-bed-mesh-auto-level)
 - [Print vertical display bracket](#print-the-vertical-display-bracket)
@@ -49,6 +49,93 @@ zip file. Extract it, and place the entire `DWIN_SET` directory and contents ont
 - Remove the back of the display, insert the SD card, plug the display back in and reboot the printer
 - The screen will go blue for a few seconds, then red, indicating the process is complete
 - Remove the SD card, and reboot the printer
+
+## Configuring OctoPrint (OctoPi)
+
+- Flash an SD card using the Rasperry Pi Imager with the OctoPi firmware
+
+- Configure the Pi
+
+- Configure the default printer settings (all settings not shown are default)
+
+  - General
+    - Name: Aquila
+    - Model: Voxelab Aquila
+  - Print bed & build volume:
+    - Form factor: Rectangular
+    - Origin: Lower left
+    - Heated bed: True
+    - Width(X): 220mm
+    - Depth(Y): 220mm
+    - Height(Z): 250mm
+  - Add the following GCode scripts:
+
+    - Before print jobs start:
+
+          ;Jyers gcode
+          M75 ;Start Print Job on Display
+          M117 <F>{{ event.name }} ;Send Filename to Display
+
+    - After print job completes
+
+          G91 ;Relative positioning
+          G1 E-2 F2700 ;Retract filament a bit
+          G1 E-2 Z0.2 F2400 ;Retract filament more and raise Z
+          G1 X5 Y5 F3000 ;Wipe out
+          G1 Z10 ;Raise Z more
+          G90 ;Absolute positioning
+
+          ;disable all heaters
+          M104 S0 ; hotend
+          M140 S0 ; bed
+
+          ;disable fan
+          M106 S0
+
+          ; disable all steppers
+          ;M84 X Y E ; (all except Z)
+          M84        ; (all)
+
+          ;Jyers gcode
+          M77 ;Stop Print Job on Display
+
+    - After print job is cancelled:
+
+          G91 ;Relative positioning
+          G1 E-2 F2700 ;Retract filament a bit
+          G1 E-2 Z0.2 F2400 ;Retract filament more and raise Z
+          G1 X5 Y5 F3000 ;Wipe out
+          G1 Z10 ;Raise Z more
+          G90 ;Absolute positioning
+
+          ;disable all heaters
+          M104 S0 ; hotend
+          M140 S0 ; bed
+
+          ;disable fan
+          M106 S0
+
+          ; disable all steppers
+          ;M84 X Y E ; (all except Z)
+          M84        ; (all)
+
+          ;Jyers code
+          M77 ;Stop Print Job on Display
+
+    - After print job is paused
+
+          ;Jyers code
+          M76 ;Pause Print Job on Display
+
+    - Before print job is resumed
+
+          ;Jyers code
+          M75 ;Start Print Job on Display
+
+## Display progress from Octoprint
+
+To have the UI display the progress when printing from Octoprint, within octoprint,
+install the `M73 Progress` plugin.
 
 ## Setting Z-Axis for auto bed level
 
@@ -194,93 +281,6 @@ Enable or disable 'Webcam while processing'.
 Leave all other settings default.
 
 You can view your mesh data in the `Data` tab.
-
-## Configuring OctoPrint (OctoPi)
-
-- Flash an SD card using the Rasperry Pi Imager with the OctoPi firmware
-
-- Configure the Pi
-
-- Configure the default printer settings (all settings not shown are default)
-
-  - General
-    - Name: Aquila
-    - Model: Voxelab Aquila
-  - Print bed & build volume:
-    - Form factor: Rectangular
-    - Origin: Lower left
-    - Heated bed: True
-    - Width(X): 220mm
-    - Depth(Y): 220mm
-    - Height(Z): 250mm
-  - Add the following GCode scripts:
-
-    - Before print jobs start:
-
-          ;Jyers gcode
-          M75 ;Start Print Job on Display
-          M117 <F>{{ event.name }} ;Send Filename to Display
-
-    - After print job completes
-
-          G91 ;Relative positioning
-          G1 E-2 F2700 ;Retract filament a bit
-          G1 E-2 Z0.2 F2400 ;Retract filament more and raise Z
-          G1 X5 Y5 F3000 ;Wipe out
-          G1 Z10 ;Raise Z more
-          G90 ;Absolute positioning
-
-          ;disable all heaters
-          M104 S0 ; hotend
-          M140 S0 ; bed
-
-          ;disable fan
-          M106 S0
-
-          ; disable all steppers
-          ;M84 X Y E ; (all except Z)
-          M84        ; (all)
-
-          ;Jyers gcode
-          M77 ;Stop Print Job on Display
-
-    - After print job is cancelled:
-
-          G91 ;Relative positioning
-          G1 E-2 F2700 ;Retract filament a bit
-          G1 E-2 Z0.2 F2400 ;Retract filament more and raise Z
-          G1 X5 Y5 F3000 ;Wipe out
-          G1 Z10 ;Raise Z more
-          G90 ;Absolute positioning
-
-          ;disable all heaters
-          M104 S0 ; hotend
-          M140 S0 ; bed
-
-          ;disable fan
-          M106 S0
-
-          ; disable all steppers
-          ;M84 X Y E ; (all except Z)
-          M84        ; (all)
-
-          ;Jyers code
-          M77 ;Stop Print Job on Display
-
-    - After print job is paused
-
-          ;Jyers code
-          M76 ;Pause Print Job on Display
-
-    - Before print job is resumed
-
-          ;Jyers code
-          M75 ;Start Print Job on Display
-
-## Display progress from Octoprint
-
-To have the UI display the progress when printing from Octoprint, within octoprint,
-install the `M73 Progress` plugin.
 
 ## Setting up Cura slicer
 
