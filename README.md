@@ -30,7 +30,8 @@ listed below are just the ones I use for my own printer.
 - [Setting up UI power toggle](#setting-up-ui-power-toggle)
 - [Disable the Pi from powering the printer](#disable-pi-powering-the-printer)
 - [Configure iPhone app](#configure-iphone-app)
-
+- [PETG Cura configuration](#petg-cura-configuration)
+ 
 ## Flashing printer firmware
 
 - On Windows, format the SDcard FAT32 4096 Byte
@@ -378,3 +379,18 @@ Proceed through the steps.
 Once done, you will be asked to authorize using a QR Code. In OctoPrint settings,
 go to `Printer`, `Application Keys` and generate a new App Key. This will result
 in a QR Code being displayed in the UI that you then capture with your phone.
+
+## PETG Cura configuration
+
+- Settings
+- Printers
+- Manage Printers
+- Materials
+- Select 'Generic PETG'
+- Click the 'hamburger' in the top-right corner
+- Click 'Duplicate'
+- Rename to "Custom PETG"
+- Print Settings
+- Set "Default printing temperature" to `222`
+- Click the 'hamburger'
+- Click 'Activate'
