@@ -391,6 +391,8 @@ in a QR Code being displayed in the UI that you then capture with your phone.
 - Click 'Duplicate'
 - Rename to "Custom PETG"
 - Print Settings
-- Set "Default printing temperature" to `222`
+- Set "Default printing temperature" to `225`
+- Set "Retraction Distance" to `7mm`
+- Set "Retraction Speed" to `55mm/s`
 - Click the 'hamburger'
 - Click 'Activate'
