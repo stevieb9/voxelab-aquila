@@ -31,6 +31,7 @@ listed below are just the ones I use for my own printer.
 - [Disable the Pi from powering the printer](#disable-pi-powering-the-printer)
 - [Configure iPhone app](#configure-iphone-app)
 - [PETG Cura configuration](#petg-cura-configuration)
+- [Cura troubleshooting](#cura-troubleshooting)
  
 ## Flashing printer firmware
 
@@ -396,3 +397,11 @@ in a QR Code being displayed in the UI that you then capture with your phone.
 - Set "Retraction Speed" to `55mm/s`
 - Click the 'hamburger'
 - Click 'Activate'
+
+## Cura troubleshoting
+
+Can't connect to printer (button does nothing)
+
+- On MacOS, first check System->Security->Local Network. If there are no (or
+- multiple) instances of Cura, move the Cura application to Trash, reboot, and
+- re-start the app. It'll prompt you to allow network access.
