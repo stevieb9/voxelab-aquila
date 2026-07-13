@@ -1,0 +1,20 @@
+First, a practical tip: several of these (especially ironing) are hidden at the default visibility. Rather than digging through menus, just type the setting name into the search box at the top of the Print Settings panel — it surfaces any setting regardless of visibility level. (Or set Preferences → Configure Cura → Settings → visibility to "Expert.")
+The settings, in the order I'd change them:
+1. Monotonic Top/Bottom Order → ON. This is the biggest single win for your exact symptom. It forces every top line to be laid in the same direction and overlap consistently, which kills the patchy/frosted look where the finish varies across the surface. It costs a little print time and nothing else. Turn this on first — it alone may solve it.
+2. Top Layers → 5. In the Top/Bottom section. At your 0.2 mm layer height that's ~1 mm of solid top, enough that infill won't telegraph through and gaps won't open up. (Cura also has "Top Thickness" — setting either updates the other.)
+3. Enable Ironing → ON, then:
+
+Ironing Pattern → Zig Zag
+Monotonic Ironing Order → ON
+Ironing Flow → 10% to start; if you still see faint gaps, raise toward 15%
+Ironing Line Spacing → 0.1 mm (default is fine)
+
+4. Verify flow rather than guessing. A localized frosted zone can be mild under-extrusion. If steps 1–3 don't fully clear it, run a flow/e-step calibration before touching the Flow % — bumping flow blindly just trades one artifact for another.
+The nuance for your part: do NOT enable "Iron Only Highest Layer." That option irons only the single topmost layer of the whole print — and on this model the rails/walls rise to ~15.5 mm while the flat plate surface you care about sits down at Z=5. So "highest layer only" would iron the rail tops and skip your plate entirely. Leaving it off makes Cura iron every top-facing surface, including the plate.
+Start with monotonic order + 5 top layers, and if the surface still isn't glassy, add ironing. That sequence should get that corner looking like the rest of the plate.
+
+
+Copy to PETG:
+
+Monotonic Top/Bottom Order — material-agnostic, helps any filament. Keep it on for PETG.
+Top Layers = 5 — purely geometric, no downside on PETG.
