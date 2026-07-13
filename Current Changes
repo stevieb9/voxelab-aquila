@@ -13,6 +13,7 @@ Ironing Line Spacing → 0.1 mm (default is fine)
 The nuance for your part: do NOT enable "Iron Only Highest Layer." That option irons only the single topmost layer of the whole print — and on this model the rails/walls rise to ~15.5 mm while the flat plate surface you care about sits down at Z=5. So "highest layer only" would iron the rail tops and skip your plate entirely. Leaving it off makes Cura iron every top-facing surface, including the plate.
 Start with monotonic order + 5 top layers, and if the surface still isn't glassy, add ironing. That sequence should get that corner looking like the rest of the plate.
 
+5: RAFT AS DEFAULT
 
 Copy to PETG:
 
