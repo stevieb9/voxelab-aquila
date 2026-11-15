@@ -188,7 +188,7 @@ Set the Z-Axis (note we've converted the number from the last step to be negativ
 
 Enable soft end stops
 
-    M211 51
+    M211 S1
 
 Save settings to EEPROM
 
@@ -232,7 +232,7 @@ fraction to add for the paper, so mine would then be `2.58`.
 Second half script:
 
     M851 Z -2.58
-    M211 51
+    M211 S1
     M500
     M501
     M503
